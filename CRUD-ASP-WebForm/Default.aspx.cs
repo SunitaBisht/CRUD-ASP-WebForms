@@ -41,6 +41,16 @@ namespace CRUD_ASP_WebForm
         {
             if (hdID.Value == "")
             {
+                if (String.IsNullOrEmpty(IdtxtFirstName.Text.Trim())
+                        || String.IsNullOrEmpty(IdtxtLastName.Text.Trim())
+                        || String.IsNullOrEmpty(IdtxtDtp.Text.Trim())
+                        || IdRbListGender.SelectedValue == null)
+                {
+                    lblMessage.Text = "Please input all fields.";
+                    lblMessage.ForeColor = System.Drawing.Color.Red;
+                    return;
+                }
+
                 using (SqlConnection xSqlConnection = new SqlConnection(connctionString))
                 {
                     string cmdText = "INSERT INTO tblStudent (FirstName,LastName,Gender,Grade,DOB) VALUES(@firstname,@lastname,@gender,@grade,@dob)";
@@ -116,7 +126,7 @@ namespace CRUD_ASP_WebForm
             if (e.CommandName == "DeleteStudent")
             {
 
-              bool isDeleted=  Delete(Convert.ToInt32(hdID.Value));
+                bool isDeleted = Delete(Convert.ToInt32(hdID.Value));
                 if (isDeleted)
                 {
                     lblMessage.Text = "Data Deleted Sucessfully.";
@@ -147,7 +157,7 @@ namespace CRUD_ASP_WebForm
                     xSqlConnection.Close();
                 }
             }
-            return isDeleted>0;
+            return isDeleted > 0;
         }
     }
 }
